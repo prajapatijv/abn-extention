@@ -21,15 +21,19 @@ const seachAbn = (abn) => {
           return response.text();
       })
       .then((response) => {
-          var json = response.replace("callback(", "").replace(")", "")
-          onSearch(JSON.parse(json));
+          var validJson = sanitizeJSON(response);
+          //console.log(validJson);
+          onSearch(JSON.parse(validJson));
       });
 }
 
 
 /* Message Passing*/
 const onSearch = (response) => {
-  debugger
+  if (response.Abn === "") {
+    return;
+  }
+
   var msg = {
     from: 'popup',
     action: 'add',
@@ -92,7 +96,7 @@ const bindAbnList = (list) => {
     div.className = item.abn;
 
     const abnBtn = document.createElement('button');
-    abnBtn.innerHTML = item.abn;
+    abnBtn.innerHTML = item.entityName;
     abnBtn.value = item.abn;
     const statusClass = item.status.toLowerCase() === 'active' ? 'abn-active' : '';
     abnBtn.className = `button button-abn ${statusClass}`;
@@ -130,4 +134,11 @@ const bindAbnList = (list) => {
     
     abnlist.append(div);
   });
+}
+
+const sanitizeJSON = (unsanitized) => {	
+  return unsanitized
+    .replace("callback", "") 
+    .replace(/\(/g, "") 
+    .replace(/\)/g, ""); 
 }
