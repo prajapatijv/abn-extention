@@ -1,0 +1,6 @@
+[
+    {"orgName":"Zip Co 1","abn":"46 000 578 727","isValid":"1"},
+    {"orgName":"Zip Co 2","abn":"50 139 546 428","isValid":"1"},
+    {"orgName":"Invalid 1","abn":"99 888 777 666","isValid":"0"},
+    {"orgName":"Invalid 2","abn":"99 888 777 555","isValid":"0"}
+]
