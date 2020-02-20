@@ -1,14 +1,59 @@
-.content {
-    margin: auto;
-    width: 50%;
-    border: 1px solid #ccc;
-    padding: 10px;
+body {
+    font-size: 1.2rem;
+    font-weight: 400 !important;
+    margin: 0px !important;
+    margin-top: 20px !important;
 }
 
-.button {
+hr {
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+}
+
+form {
+    margin-bottom: 0px !important;
+}
+
+.container {
+    width: 250px;
+    background-color: #f9f9f9;
+}
+
+.button-abn {
+    width: 180px;
     margin-bottom: 1px !important;
-    min-width: 300px;
     border: 0px !important;
     text-align: left !important;
-    background-color: #f9f9f9;
+    background-color: transparent;
+    display: inline-block !important;
+    height: 28px !important;
+    line-height: 28px !important;
+    padding-left: 5px;
+    padding-right: 15px;
+    border-radius: 0px;
+}
+
+label {
+    font-weight: 400 !important;
+}
+
+.button-x {
+    padding: 0 10px;
+    display: inline-block !important;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 0 !important;
+    border: 0px !important;
+}
+
+.input-add-abn {
+    display: inline-block !important;
+}
+
+.btn-add-abn {
+    display: inline-block !important;
+}
+
+.abn-active {
+    border-left: 2px solid #1EAEDB !important;
 }

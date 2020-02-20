@@ -1,14 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   loadAbnList(loadAbnListCallback);
-  /*
-  document.getElementById('btnOptions').addEventListener('click', function () {
-    if (chrome.runtime.openOptionsPage) {
-      chrome.runtime.openOptionsPage();
-    } else {
-      window.open(chrome.runtime.getURL('options.html'));
-    }
-  });*/
   
   document.getElementById('btnAdd').addEventListener('click', function () {
     const abn = document.getElementById('abn').value;
@@ -17,46 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }, false);
 
-
-const bindAbnList = (list) => {
-  var abnlist = document.getElementById("abn-list");
-
-  list.forEach(item => {
-    const abnBtn = document.createElement('button');
-    abnBtn.innerHTML = item.entityName + ' - ' + item.abn;
-    abnBtn.value = item.abn;
-    abnBtn.className = 'button';
-
-    const abnDelete = document.createElement('button');
-    abnDelete.innerHTML = 'X';
-    abnDelete.value = item.abn;
-    abnDelete.className = 'button-primary';
-
-    abnBtn.onclick = (event) => {
-      var msg = {
-        from: 'popup',
-        action: 'select',
-        abn: event.target.value
-      }
-
-      sendMessage(msg);
-      window.close();
-    }
-
-    abnDelete.onclick = (event) => {
-      var msg = {
-        from: 'popup',
-        action: 'delete',
-        abn: event.target.value
-      }
-
-      sendMessage(msg);
-    }
-    
-    abnlist.append(abnBtn);
-    abnlist.append(abnDelete);
-  });
-}
 
 const tryAddAbn = (abn) => {
   seachAbn(abn);
@@ -75,10 +27,9 @@ const seachAbn = (abn) => {
 }
 
 
-
-
 /* Message Passing*/
 const onSearch = (response) => {
+  debugger
   var msg = {
     from: 'popup',
     action: 'add',
@@ -87,15 +38,20 @@ const onSearch = (response) => {
     entityName: response.EntityName,
   }
 
-  sendMessage(msg);
+  sendMessage(msg, onAdded);
 }
 
+const onAdded = (data) => {
+  loadAbnListCallback([data]);
+}
+
+
+//LoadAbn
 const loadAbnList = (callback) => {
   var msg = {
     from: 'popup',
     action: 'load'
   }
-
   sendMessage(msg, callback);
 }
 const loadAbnListCallback = (list) => {
@@ -118,4 +74,60 @@ const sendMessage = (message, callback) => {
     // The first tab is the one you are on
     chrome.tabs.sendMessage(tabs[0].id, message, callback);
   }
+}
+
+//Bind DOM
+const bindAbnList = (list) => {
+  var abnlist = document.getElementById("abn-list");
+
+  if (null === list || undefined === list) {
+    const label = document.createElement('label');
+    label.innerHTML = "Please add ABN numbers";
+    abnlist.append(label);
+    return;
+  }
+
+  list.forEach(item => {
+    const div = document.createElement('div');
+    div.className = item.abn;
+
+    const abnBtn = document.createElement('button');
+    abnBtn.innerHTML = item.abn;
+    abnBtn.value = item.abn;
+    const statusClass = item.status.toLowerCase() === 'active' ? 'abn-active' : '';
+    abnBtn.className = `button button-abn ${statusClass}`;
+
+    const abnDelete = document.createElement('button');
+    abnDelete.innerHTML = 'X';
+    abnDelete.value = item.abn;
+    abnDelete.className = 'button button-x';
+
+    abnBtn.onclick = (event) => {
+      var msg = {
+        from: 'popup',
+        action: 'select',
+        abn: event.target.value
+      }
+
+      sendMessage(msg);
+      window.close();
+    }
+
+    abnDelete.onclick = (event) => {
+      var msg = {
+        from: 'popup',
+        action: 'delete',
+        abn: event.target.value
+      }
+
+      sendMessage(msg);
+      var item = document.getElementsByClassName(event.target.value)[0];
+      abnlist.removeChild(item); 
+    }
+    
+    div.append(abnBtn);
+    div.append(abnDelete);
+    
+    abnlist.append(div);
+  });
 }

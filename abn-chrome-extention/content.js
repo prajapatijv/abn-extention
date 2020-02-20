@@ -13,10 +13,10 @@ function receiver(request, sender, sendResponse) {
             selectAbn(request);
             break;
         case 'add':
-            addAbn(request);
+            addAbn(request, sendResponse);
             break;
         case 'delete':
-            removeAbn(request);
+            removeAbn(request, sendResponse);
             break;
         default:
     }
@@ -34,18 +34,18 @@ function selectAbn(request) {
     }
 }
 
-function addAbn(request) {
+function addAbn(request, callback) {
     load(function(data){
         var items = data !== undefined ? data : [];
         items.push(request);
         chrome.storage.sync.set({ 'abnDataSource' : items }, function() {
             console.log('saved');
-            return callback({'action':'added'});
+            return callback(request);
         });
     })
 }
 
-function removeAbn(request) {
+function removeAbn(request, callback) {
     load(function(data){
         var items = data !== undefined ? data : [];
         var filteredItems = items.filter(function(ele){
@@ -53,7 +53,7 @@ function removeAbn(request) {
         });
         chrome.storage.sync.set({ 'abnDataSource' : filteredItems }, function() {
             console.log('saved');
-            return callback({'action':'removed'});
+            return callback(request);
         });
 
     })
