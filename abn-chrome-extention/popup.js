@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
     tryAddAbn(abn);
   });
 
+  document.getElementById('abn').addEventListener('input', function() {
+    document.getElementById('abn').classList.remove('invalid');
+  })
+
 }, false);
 
 
@@ -31,6 +35,8 @@ const seachAbn = (abn) => {
 /* Message Passing*/
 const onSearch = (response) => {
   if (response.Abn === "") {
+    document.getElementById('abn').classList.remove('invalid');
+    document.getElementById('abn').classList.add('invalid');
     return;
   }
 
@@ -134,6 +140,8 @@ const bindAbnList = (list) => {
     
     abnlist.append(div);
   });
+
+  document.getElementById('abn').value = '';
 }
 
 const sanitizeJSON = (unsanitized) => {	
