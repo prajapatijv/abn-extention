@@ -59,9 +59,17 @@ label {
     height: 28px !important;
     line-height: 28px !important;
 }
+.btn-add-abn:disabled {
+    background: #dddddd !important;   
+    border-color: #dddddd !important;   
+}
 
 .abn-active {
     border-left: 2px solid #1EAEDB !important;
+}
+
+.abn-non-active {
+    border-left: 2px solid red !important;
 }
 
 .invalid {

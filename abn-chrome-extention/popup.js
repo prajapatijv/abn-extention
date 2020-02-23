@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  document.getElementById('btnAdd').disabled = true;
   loadAbnList(loadAbnListCallback);
   
   document.getElementById('btnAdd').addEventListener('click', function () {
@@ -8,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById('abn').addEventListener('input', function() {
-    document.getElementById('abn').classList.remove('invalid');
+    document.getElementById('abn').classList?.remove('invalid');
+    document.getElementById('btnAdd').disabled = document.getElementById('abn').value.trim().length !== 11;
   })
 
 }, false);
@@ -35,8 +37,8 @@ const seachAbn = (abn) => {
 /* Message Passing*/
 const onSearch = (response) => {
   if (response.Abn === "") {
-    document.getElementById('abn').classList.remove('invalid');
-    document.getElementById('abn').classList.add('invalid');
+    document.getElementById('abn')?.classList.remove('invalid');
+    document.getElementById('abn')?.classList.add('invalid');
     return;
   }
 
@@ -104,7 +106,7 @@ const bindAbnList = (list) => {
     const abnBtn = document.createElement('button');
     abnBtn.innerHTML = item.entityName;
     abnBtn.value = item.abn;
-    const statusClass = item.status.toLowerCase() === 'active' ? 'abn-active' : '';
+    const statusClass = item.status.toLowerCase() === 'active' ? 'abn-active' : 'abn-non-active';
     abnBtn.className = `button button-abn ${statusClass}`;
 
     const abnDelete = document.createElement('button');
