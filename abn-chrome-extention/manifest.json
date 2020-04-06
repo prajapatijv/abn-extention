@@ -1,12 +1,12 @@
 {
     "manifest_version": 2,
-    "name": "ABN Plugin",
+    "name": "Handy ABN",
     "description": "This extension will provide ABN for testing",
-    "version": "1.0",
+    "version": "0.0.0.1",
     "browser_action": {
         "default_icon": "handy-abn-logo.png",
         "default_popup": "popup.html",
-        "default_title": "ABN Helper"
+        "default_title": "Handy ABN"
     },
     "content_scripts": [
         {
