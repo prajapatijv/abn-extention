@@ -37,12 +37,17 @@ function selectAbn(request) {
 function addAbn(request, callback) {
     load(function(data){
         var items = data !== undefined ? data : [];
+        
+        if (items.find(i => i.abn === request.abn)) {
+            return callback(null);
+        }
+
         items.push(request);
         chrome.storage.sync.set({ 'abnDataSource' : items }, function() {
             console.log('saved');
             return callback(request);
         });
-    })
+    }) 
 }
 
 function removeAbn(request, callback) {
